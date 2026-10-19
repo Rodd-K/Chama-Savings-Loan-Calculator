@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SACCO &amp; Chama Savings and Loan Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>Savings and loan calculator</h1>
+    <p>For SACCO and chama members. All amounts in Kenya shillings (KES).</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" role="tab" id="t-save" aria-controls="save" aria-selected="true">Savings goal</button>
+    <button class="tab" role="tab" id="t-loan" aria-controls="loan" aria-selected="false">Loan</button>
+  </div>
+
+  <!-- Savings -->
+  <section id="save" class="panel active" role="tabpanel" aria-labelledby="t-save">
+    <form class="inputs" novalidate>
+      <label>Monthly contribution (KES)
+        <input name="monthly" type="number" step="any" min="0" value="5000" inputmode="decimal">
+        <small class="err"></small></label>
+      <label>Interest rate (% per year)
+        <input name="rate" type="number" step="any" min="0" max="100" value="10" inputmode="decimal">
+        <small class="err"></small></label>
+      <label>Saving period (years)
+        <input name="years" type="number" step="1" min="1" max="50" value="5" inputmode="numeric">
+        <small class="err"></small></label>
+      <button type="submit">Calculate savings</button>
+    </form>
+    <div class="results" aria-live="polite">
+      <div class="card" id="save-result"></div>
+      <div class="card chart-box"><canvas id="chart" aria-label="Savings growth chart" role="img"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Loan -->
+  <section id="loan" class="panel" role="tabpanel" aria-labelledby="t-loan">
+    <form class="inputs" novalidate>
+      <label>Loan amount (KES)
+        <input name="amount" type="number" step="any" min="0" value="100000" inputmode="decimal">
+        <small class="err"></small></label>
+      <label>Interest rate (% per year)
+        <input name="rate" type="number" step="any" min="0" max="100" value="12" inputmode="decimal">
+        <small class="err"></small></label>
+      <label>Repayment period (months)
+        <input name="months" type="number" step="1" min="1" max="360" value="12" inputmode="numeric">
+        <small class="err"></small></label>
+      <button type="submit">Calculate loan</button>
+    </form>
+    <div class="results" aria-live="polite">
+      <div class="card" id="loan-result"></div>
+      <div class="card">
+        <h2>Amortisation schedule</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Month</th><th>Repayment</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
+            <tbody id="schedule"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>How this is calculated</h2>
+    <ul>
+      <li><b>Savings:</b> interest is added every month at the yearly rate ÷ 12. The final amount is your monthly contribution compounded over every month of the period, with contributions made at the end of each month.</li>
+      <li><b>Loan:</b> repayments are equal each month on a reducing balance. Each month's interest is charged only on what you still owe, so interest falls and principal rises over time.</li>
+      <li>Rates are entered per year. If your SACCO quotes a monthly rate (for example 1%), multiply by 12 first.</li>
+    </ul>
+    <p class="note">These are estimates. Your SACCO's processing fees, insurance and dividend rules are not included.</p>
+  </section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
